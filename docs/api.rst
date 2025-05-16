@@ -14,3 +14,7 @@ API Reference
 .. autoclass:: AdminClient
    :members:
    :undoc-members:
+
+.. autoclass:: FuturesDict
+   :members:
+   :undoc-members:
