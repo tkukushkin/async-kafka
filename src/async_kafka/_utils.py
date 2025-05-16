@@ -9,6 +9,7 @@ import anyio.from_thread
 if sys.version_info >= (3, 11):
     from typing import Self
 else:
+    from exceptiongroup import ExceptionGroup
     from typing_extensions import Self
 
 _P = ParamSpec('_P')
@@ -37,13 +38,32 @@ async def wrap_concurrent_future(future: Future[_T]) -> _T:
 
 
 class FuturesDict(dict[_K, Coroutine[Any, Any, _V]]):
+    """
+    A dictionary which values are awaitable objects.
+    It can be awaited to get a dictionary of results.
+
+    .. code-block:: python
+
+       async def foo(x: int) -> int:
+           return x ** 2
+
+       data = FuturesDict({1: foo(1), 2: foo(2)})
+       assert await data == {1: 1, 2: 4}
+    """
+
     def __await__(self) -> Generator[Any, Any, dict[_K, _V]]:
         return self.__await().__await__()
 
     async def __await(self) -> dict[_K, _V]:
         result: dict[_K, _V] = {}
+        exceptions: list[Exception] = []
         for key, coro in self.items():
-            result[key] = await coro
+            try:
+                result[key] = await coro
+            except Exception as exc:
+                exceptions.append(exc)
+        if exceptions:
+            raise ExceptionGroup('Multiple exceptions occurred', exceptions)
         return result
 
     @classmethod

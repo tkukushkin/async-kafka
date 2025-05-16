@@ -12,6 +12,7 @@ readme = "README.md"
 dependencies = [
   "anyio",
   "confluent-kafka",
+  "exceptiongroup; python_version < '3.11'",
 ]
 license = { file = "LICENSE" }
 classifiers = [

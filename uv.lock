@@ -36,6 +36,7 @@ source = { editable = "." }
 dependencies = [
     { name = "anyio" },
     { name = "confluent-kafka" },
+    { name = "exceptiongroup", marker = "python_full_version < '3.11'" },
 ]
 
 [package.dev-dependencies]
@@ -87,6 +88,7 @@ test = [
 requires-dist = [
     { name = "anyio" },
     { name = "confluent-kafka" },
+    { name = "exceptiongroup", marker = "python_full_version < '3.11'" },
 ]
 
 [package.metadata.requires-dev]
