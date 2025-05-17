@@ -1,6 +1,6 @@
-import async_kafka
+import kafka_async
 
-project = 'async-kafka'
+project = 'kafka-async'
 copyright = '2024, Timofei Kukushkin'
 author = 'Timofei Kukushkin'
 
@@ -9,7 +9,7 @@ extensions = [
     'sphinx.ext.intersphinx',
     'myst_parser',
 ]
-version = release = async_kafka.__version__
+version = release = kafka_async.__version__
 
 templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']

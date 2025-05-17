@@ -10,7 +10,7 @@ import anyio.to_thread
 import confluent_kafka
 import confluent_kafka.admin
 
-from async_kafka._utils import make_kwargs, to_dict, to_list
+from kafka_async._utils import make_kwargs, to_dict, to_list
 
 if sys.version_info >= (3, 11):
     from typing import Self

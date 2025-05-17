@@ -1,7 +1,7 @@
 API Reference
 =============
 
-.. py:currentmodule:: async_kafka
+.. py:currentmodule:: kafka_async
 
 .. autoclass:: Producer
    :members:

@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 dynamic = ["version"]
-name = "async-kafka"
+name = "kafka-async"
 requires-python = ">=3.10"
 authors = [{ name = "Timofei Kukushkin", email = "tima@kukushkin.me" }]
 description = "Thin async wrapper for Confluent Kafka Python client"
@@ -59,11 +59,11 @@ dev = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/tkukushkin/async-kafka"
-Repository = "https://github.com/tkukushkin/async-kafka.git"
-Issues = "https://github.com/tkukushkin/async-kafka/issues"
-Documentation = "https://async-kafka.readthedocs.io/stable"
-Changelog = "https://github.com/tkukushkin/async-kafka/releases"
+Homepage = "https://github.com/tkukushkin/kafka-async"
+Repository = "https://github.com/tkukushkin/kafka-async.git"
+Issues = "https://github.com/tkukushkin/kafka-async/issues"
+Documentation = "https://kafka-async.readthedocs.io/stable"
+Changelog = "https://github.com/tkukushkin/kafka-async/releases"
 
 [tool.setuptools_scm]
-version_file = "src/async_kafka/_version.py"
+version_file = "src/kafka_async/_version.py"

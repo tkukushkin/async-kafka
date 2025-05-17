@@ -2,4 +2,4 @@
 .tox/
 __pycache__/
 docs/_build
-src/async_kafka/_version.py
+src/kafka_async/_version.py

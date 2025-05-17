@@ -8,7 +8,7 @@ import confluent_kafka.admin
 import pytest
 from lovely.pytest.docker.compose import Services
 
-import async_kafka
+import kafka_async
 
 
 @pytest.fixture(scope='session', autouse=True)
@@ -43,18 +43,18 @@ def _start_kafka(default_config: Mapping[str, Any], docker_services: Services) -
 
 @pytest.fixture
 async def producer(default_config):
-    async with async_kafka.Producer(default_config) as producer:
+    async with kafka_async.Producer(default_config) as producer:
         yield producer
 
 
 @pytest.fixture
-async def admin_client(default_config) -> async_kafka.AdminClient:
-    return async_kafka.AdminClient(default_config)
+async def admin_client(default_config) -> kafka_async.AdminClient:
+    return kafka_async.AdminClient(default_config)
 
 
 @pytest.fixture
 async def consumer(default_config):
-    async with async_kafka.Consumer(
+    async with kafka_async.Consumer(
         {**default_config, 'group.id': str(uuid1()), 'auto.offset.reset': 'earliest'}
     ) as consumer:
         yield consumer

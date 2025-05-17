@@ -2,7 +2,7 @@
 branch = true
 relative_files = true
 source =
-  async_kafka
+  kafka_async
 context = $COVERAGE_CONTEXT
 
 [paths]
