@@ -265,7 +265,7 @@ name = "exceptiongroup"
 version = "1.3.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "typing-extensions", marker = "python_full_version < '3.13'" },
+    { name = "typing-extensions", marker = "python_full_version < '3.11'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/0b/9f/a65090624ecf468cdca03533906e7c69ed7588582240cfe7cc9e770b50eb/exceptiongroup-1.3.0.tar.gz", hash = "sha256:b241f5885f560bc56a59ee63ca4c6a8bfa46ae4ad651af316d4e81817bb9fd88", size = 29749, upload-time = "2025-05-10T17:42:51.123Z" }
 wheels = [
@@ -348,6 +348,7 @@ dependencies = [
 [package.dev-dependencies]
 dev = [
     { name = "furo" },
+    { name = "kafka-stubs" },
     { name = "lovely-pytest-docker" },
     { name = "myst-parser" },
     { name = "pyright" },
@@ -373,6 +374,7 @@ docs = [
     { name = "sphinx-autodoc-typehints", version = "3.2.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
 ]
 lint = [
+    { name = "kafka-stubs" },
     { name = "lovely-pytest-docker" },
     { name = "pyright" },
     { name = "pytest" },
@@ -390,13 +392,14 @@ test = [
 [package.metadata]
 requires-dist = [
     { name = "anyio" },
-    { name = "confluent-kafka" },
+    { name = "confluent-kafka", specifier = ">=2.10.0" },
     { name = "exceptiongroup", marker = "python_full_version < '3.11'" },
 ]
 
 [package.metadata.requires-dev]
 dev = [
     { name = "furo" },
+    { name = "kafka-stubs" },
     { name = "lovely-pytest-docker" },
     { name = "myst-parser" },
     { name = "pyright" },
@@ -418,6 +421,7 @@ docs = [
     { name = "sphinx-autodoc-typehints" },
 ]
 lint = [
+    { name = "kafka-stubs" },
     { name = "lovely-pytest-docker" },
     { name = "pyright" },
     { name = "pytest" },
@@ -430,6 +434,18 @@ test = [
     { name = "pytest" },
     { name = "pytest-anyio" },
     { name = "pytest-cov" },
+]
+
+[[package]]
+name = "kafka-stubs"
+version = "2.10.0.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "confluent-kafka" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/de/96/2fadd79101a7411ec1c445982398d5487221325d16933ad2e0408e34d6f9/kafka_stubs-2.10.0.0.tar.gz", hash = "sha256:dc29d608cc39819797a4df5a0d0273b0b853f37a74c59b3d89f5fb1f87468e76", size = 32630, upload-time = "2025-05-17T16:17:50.547Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/ef/04/2289b0991832853d8fa81862b418c8845c4426565c70c4dfeeba8b6f43de/kafka_stubs-2.10.0.0-py3-none-any.whl", hash = "sha256:9a2575fc38c1e7a5a7965b16a241cd2b862d5447a14655a9106b8277c5ddfdca", size = 21672, upload-time = "2025-05-17T16:17:49.223Z" },
 ]
 
 [[package]]

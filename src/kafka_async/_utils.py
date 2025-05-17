@@ -83,5 +83,11 @@ def to_dict(obj: Mapping[_K, _V]) -> dict[_K, _V]:
     return dict(obj)
 
 
+def to_set(obj: Iterable[_T]) -> set[_T]:
+    if isinstance(obj, set):
+        return obj
+    return set(obj)
+
+
 def make_kwargs(**kwargs: Any) -> dict[str, Any]:
     return {k: v for k, v in kwargs.items() if v is not None}

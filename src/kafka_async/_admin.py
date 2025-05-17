@@ -1,4 +1,4 @@
-from collections.abc import Coroutine, Iterable, Mapping, Set as AbstractSet
+from collections.abc import Coroutine, Iterable, Mapping
 from concurrent.futures import Future
 from typing import Any, Literal, overload
 
@@ -7,7 +7,7 @@ import anyio.to_thread
 import confluent_kafka
 import confluent_kafka.admin
 
-from ._utils import FuturesDict, make_kwargs, to_dict, to_list, wrap_concurrent_future
+from ._utils import FuturesDict, make_kwargs, to_dict, to_list, to_set, wrap_concurrent_future
 
 
 class AdminClient:
@@ -126,12 +126,16 @@ class AdminClient:
         self,
         *,
         request_timeout: float | None = None,
-        states: AbstractSet[confluent_kafka.ConsumerGroupState] | None = None,
-        types: AbstractSet[confluent_kafka.ConsumerGroupType] | None = None,
+        states: Iterable[confluent_kafka.ConsumerGroupState] | None = None,
+        types: Iterable[confluent_kafka.ConsumerGroupType] | None = None,
     ) -> confluent_kafka.admin.ListConsumerGroupsResult:
         return await wrap_concurrent_future(
             self._admin_client.list_consumer_groups(
-                **make_kwargs(request_timeout=request_timeout, states=states, types=types)
+                **make_kwargs(
+                    request_timeout=request_timeout,
+                    states=to_set(states) if states is not None else None,
+                    types=to_set(types) if types is not None else None,
+                )
             )
         )
 
@@ -300,11 +304,11 @@ class AdminClient:
         *,
         request_timeout: float | None = None,
         operation_timeout: float | None = None,
-    ) -> dict[confluent_kafka.TopicPartition, confluent_kafka.KafkaError | None]:
+    ) -> dict[confluent_kafka.TopicPartition, confluent_kafka.KafkaException | None]:
         return await wrap_concurrent_future(
             self._admin_client.elect_leaders(
                 election_type,
-                partitions,
+                to_list(partitions) if partitions is not None else None,
                 **make_kwargs(request_timeout=request_timeout, operation_timeout=operation_timeout),
             )
         )

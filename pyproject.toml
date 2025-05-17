@@ -11,7 +11,7 @@ description = "Thin async wrapper for Confluent Kafka Python client"
 readme = "README.md"
 dependencies = [
   "anyio",
-  "confluent-kafka",
+  "confluent-kafka>=2.10.0",
   "exceptiongroup; python_version < '3.11'",
 ]
 license = { file = "LICENSE" }
@@ -41,6 +41,7 @@ lint = [
   { include-group = "test" },
   "pyright",
   "ruff",
+  "kafka-stubs",
 ]
 docs = [
   "furo",
