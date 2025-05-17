@@ -1,5 +1,5 @@
 import sys
-from collections.abc import Callable, Coroutine, Generator, Mapping
+from collections.abc import Callable, Coroutine, Generator, Iterable, Mapping
 from concurrent.futures import Future
 from functools import wraps
 from typing import Any, ParamSpec, TypeVar
@@ -69,3 +69,19 @@ class FuturesDict(dict[_K, Coroutine[Any, Any, _V]]):
     @classmethod
     def from_concurrent_futures(cls, futures: Mapping[_K, Future[_V]]) -> Self:
         return cls({key: wrap_concurrent_future(value) for key, value in futures.items()})
+
+
+def to_list(obj: Iterable[_T]) -> list[_T]:
+    if isinstance(obj, list):
+        return obj
+    return list(obj)
+
+
+def to_dict(obj: Mapping[_K, _V]) -> dict[_K, _V]:
+    if isinstance(obj, dict):
+        return obj
+    return dict(obj)
+
+
+def make_kwargs(**kwargs: Any) -> dict[str, Any]:
+    return {k: v for k, v in kwargs.items() if v is not None}

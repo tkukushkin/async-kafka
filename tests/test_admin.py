@@ -1,15 +1,12 @@
+import sys
 from collections.abc import Awaitable
 from uuid import uuid1
 
 import confluent_kafka.admin
 import pytest
 
-import async_kafka
-
-
-@pytest.fixture(scope='module')
-async def admin_client(default_config) -> async_kafka.AdminClient:
-    return async_kafka.AdminClient(default_config)
+if sys.version_info < (3, 11):
+    from exceptiongroup import ExceptionGroup
 
 
 async def test_create_topics(admin_client):
@@ -37,5 +34,12 @@ async def test_describe_user_scram_credentials__with_users_and_await_one(admin_c
 
 
 async def test_describe_user_scram_credentials__with_users_and_await_all(admin_client):
-    with pytest.raises(confluent_kafka.KafkaException):
+    with pytest.raises(ExceptionGroup) as excinfo:
         await admin_client.describe_user_scram_credentials(users=['user1'])
+
+    assert len(excinfo.value.exceptions) == 1
+    assert isinstance(excinfo.value.exceptions[0], confluent_kafka.KafkaException)
+
+
+def test_set_sasl_credentials(admin_client):
+    admin_client.set_sasl_credentials('user', 'password')

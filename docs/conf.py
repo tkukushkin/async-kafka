@@ -19,6 +19,7 @@ html_static_path = ['_static']
 
 intersphinx_mapping = {
     'python': ('https://docs.python.org/3', None),
+    'confluent_kafka': ('https://docs.confluent.io/platform/current/clients/confluent-kafka-python/html', None),
 }
 
 autoclass_content = 'both'

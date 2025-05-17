@@ -36,7 +36,6 @@ test = [
   "pytest-anyio",
   "pytest-cov",
   "lovely-pytest-docker",
-  "trio",
 ]
 lint = [
   { include-group = "test" },
