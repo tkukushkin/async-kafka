@@ -1,5 +1,5 @@
 import sys
-from collections.abc import Callable, Coroutine, Generator, Iterable, Mapping
+from collections.abc import Awaitable, Callable, Coroutine, Generator, Iterable, Mapping
 from concurrent.futures import Future
 from functools import wraps
 from typing import Any, ParamSpec, TypeVar
@@ -19,11 +19,14 @@ _V = TypeVar('_V')
 
 
 def async_to_sync(
-    func: Callable[_P, Coroutine[Any, Any, _T]],
+    func: Callable[_P, Awaitable[_T] | _T],
 ) -> Callable[_P, _T]:
     @wraps(func)
     def wrapper(*args: _P.args, **kwargs: _P.kwargs) -> _T:
-        return anyio.from_thread.run(lambda: func(*args, **kwargs))
+        result = func(*args, **kwargs)
+        if isinstance(result, Awaitable):
+            return anyio.from_thread.run(lambda: result)
+        return result
 
     return wrapper
 
@@ -91,3 +94,11 @@ def to_set(obj: Iterable[_T]) -> set[_T]:
 
 def make_kwargs(**kwargs: Any) -> dict[str, Any]:
     return {k: v for k, v in kwargs.items() if v is not None}
+
+
+def make_sync_config(config: Mapping[str, Any]) -> dict[str, Any]:
+    result = dict(config)
+    for key in ['error_cb', 'throttle_cb', 'stats_cb', 'oauth_cb', 'on_delivery', 'on_commit']:
+        if func := result.get(key):
+            result[key] = async_to_sync(func)
+    return result

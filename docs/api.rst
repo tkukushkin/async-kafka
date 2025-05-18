@@ -17,3 +17,4 @@ API Reference
 
 .. autoclass:: FuturesDict
    :members:
+   :undoc-members:
